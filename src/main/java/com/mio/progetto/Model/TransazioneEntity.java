@@ -22,7 +22,7 @@ public class TransazioneEntity {
     @Override
     public String toString() {
         return "TransazioneEntity{" +
-                "descrizione='" + descrizione + '\'' +
+                "descrizione= " + descrizione + '\'' +
                 '}';
     }
 

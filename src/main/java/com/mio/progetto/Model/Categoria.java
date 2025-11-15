@@ -8,6 +8,7 @@ public enum Categoria{
         AFFITTO,
         BOLLETTE,
         SHOPPING,
+        SPESA,
         ALTRO
     }
 
