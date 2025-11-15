@@ -1,11 +1,13 @@
 package com.mio.progetto;
 
 import com.mio.progetto.JavaFx.CreateBarChart;
+import com.mio.progetto.Model.Categoria;
 import com.mio.progetto.Model.Transazione;
 import com.mio.progetto.Model.TransazioneEntity;
 import com.mio.progetto.database.DataBaseCreator;
 
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
@@ -29,10 +31,28 @@ public class App
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();
                 String descrizione = input;
-                System.out.println("Inserire Categoria");
+//                System.out.println("Inserire Categoria");
+//                scanner = new Scanner(System.in);
+//                input = scanner.nextLine();
+//                String categoria = input;
+
+                System.out.println("Inserire Categoria tra le seguenti:");
+                for (Categoria c : Categoria.values()) {
+                    System.out.println("- " + c);
+                }
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();
-                String categoria = input;
+
+                Categoria categoria;
+                try {
+                    categoria = Categoria.valueOf(input.toUpperCase());
+                } catch (IllegalArgumentException e) {
+                    System.out.println("Categoria non valida. Riprova.");
+                    continue;
+                }
+
+
+
                 System.out.println("Inserire Importo");
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();

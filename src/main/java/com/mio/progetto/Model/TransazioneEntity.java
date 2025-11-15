@@ -9,10 +9,10 @@ public class TransazioneEntity {
     private String data;
 
 
-    public TransazioneEntity(int Id, String descrizione, String categoria, double importo, String data){
+    public TransazioneEntity(int Id, String descrizione, Categoria categoria, double importo, String data){
         this.Id= Id;
         this.descrizione= descrizione;
-        this.categoria= categoria;
+        this.categoria= String.valueOf(categoria);
         this.importo= importo;
         this.data= data;
     }
