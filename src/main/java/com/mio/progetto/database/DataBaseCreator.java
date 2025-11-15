@@ -9,7 +9,7 @@ public class DataBaseCreator {
     private static final String URL= "jdbc:mysql://localhost:3306/";
     private static final String DB_NAME= "gestione_spese";
     private static final String USER= "root";
-    private static final String PASSWORD= "testdatabase";
+    private static final String PASSWORD= "test1234";
 
     public DataBaseCreator() throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);

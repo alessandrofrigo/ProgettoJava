@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transazione {
+    public Categoria categoria;
+
     public void insertTransizione(TransazioneEntity transizione) {
         String sql= "INSERT INTO transazioni (descrizione, importo, categoria, data) VALUES (?, ?, ?, ?)";
         try (Connection conn = DataBaseCreator.getConnection();
@@ -32,7 +34,7 @@ public class Transazione {
                 lista.add(new TransazioneEntity(
                         rs.getInt("Id"),
                         rs.getString("descrizione"),
-                        rs.getString("categoria"),
+                        Categoria.valueOf(rs.getString("categoria")),
                         rs.getDouble("importo"),
                         rs.getString("data")));
             }
@@ -95,5 +97,14 @@ public class Transazione {
             System.out.println("Errore nel reset di AUTO_INCREMENT: " + e.getMessage());
         }
     }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
 
 }
