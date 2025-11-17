@@ -4,30 +4,48 @@ package com.mio.progetto.Model;
 public class TransazioneEntity {
     private int Id;
     private String descrizione;
-    private String categoria;
+    private Categoria categoria;
+    private String sottocategoria;
     private double importo;
     private String data;
 
 
-    public TransazioneEntity(int Id, String descrizione, Categoria categoria, double importo, String data){
+    public TransazioneEntity(int Id, String descrizione, Categoria categoria, Sottocategoria sottocategoria, double importo, String data){
         this.Id= Id;
         this.descrizione= descrizione;
-        this.categoria= String.valueOf(categoria);
+        this.categoria= Categoria.valueOf(String.valueOf(categoria));
+        this.sottocategoria = String.valueOf(sottocategoria);
         this.importo= importo;
         this.data= data;
     }
+
+    public TransazioneEntity(int id, String descrizione, String categoriaStr, String sottocategoriaStr, double importo, String data) {
+        this.Id = Id;
+        this.descrizione = descrizione;
+        this.categoria = Categoria.valueOf(String.valueOf(Categoria.valueOf(categoriaStr)));
+        this.sottocategoria = String.valueOf(new Sottocategoria(sottocategoriaStr, this.categoria));
+        this.importo = importo;
+        this.data = data;
+    }
+
 
     public int getId() {return Id;}
 
     @Override
     public String toString() {
         return "TransazioneEntity{" +
-                "descrizione= " + descrizione + '\'' +
+                "id=" + Id +
+                ", descrizione='" + descrizione + '\'' +
+                ", categoria='" + categoria + '\'' +
+                ", sottocategoria='" + sottocategoria + '\'' +
+                ", importo=" + importo +
+                ", data='" + data + '\'' +
                 '}';
     }
 
     public String getDescrizione() { return descrizione;}
-    public String getCategoria(){ return categoria;}
+    public Categoria getCategoria(){ return categoria;}
+    public String getSottocategoria() { return sottocategoria;}
     public Double getImporto() {return importo;}
     public String getData() { return data;}
 }

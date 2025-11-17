@@ -7,22 +7,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Transazione {
-    public Categoria categoria;
 
-    public void insertTransizione(TransazioneEntity transizione) {
-        String sql= "INSERT INTO transazioni (descrizione, importo, categoria, data) VALUES (?, ?, ?, ?)";
+    public void insertTransizione(TransazioneEntity t) {
+        String sql = "INSERT INTO transazioni (descrizione, importo, categoria, sottocategoria, data) VALUES (?, ?, ?, ?, ?)";
+
         try (Connection conn = DataBaseCreator.getConnection();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, transizione.getDescrizione());
-            pstmt.setDouble(2, transizione.getImporto());
-            pstmt.setString(3, transizione.getCategoria());
-            pstmt.setString(4, transizione.getData());
+
+            pstmt.setString(1, t.getDescrizione());
+            pstmt.setDouble(2, t.getImporto());
+            pstmt.setString(3, t.getCategoria().toString());          // salva enum come nome (STRING)
+            pstmt.setString(4, t.getSottocategoria());  // salva nome della sottocategoria
+            pstmt.setString(5, t.getData());
+
             pstmt.executeUpdate();
             System.out.println("Transazione inserita con successo!");
+
         } catch (SQLException e) {
             System.out.println("Errore nell'inserimento della transazione: " + e.getMessage());
         }
     }
+
     public List<TransazioneEntity> getAllTransazioni() {
         List<TransazioneEntity> lista = new ArrayList<>();
         String sql = "SELECT * FROM transazioni";
@@ -30,20 +35,37 @@ public class Transazione {
         try (Connection conn = DataBaseCreator.getConnection();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
+
             while (rs.next()) {
-                lista.add(new TransazioneEntity(
-                        rs.getInt("Id"),
-                        rs.getString("descrizione"),
-                        Categoria.valueOf(rs.getString("categoria")),
-                        rs.getDouble("importo"),
-                        rs.getString("data")));
+                // leggo le colonne come stringhe/primitive dal DB
+                int id = rs.getInt("id");
+                String descrizione = rs.getString("descrizione");
+                String categoriaStr = rs.getString("categoria");
+                String sottocategoriaStr = rs.getString("sottocategoria");
+                double importo = rs.getDouble("importo");
+                String data = rs.getString("data");
+
+                // costruisco l'oggetto TransazioneEntity usando il costruttore di comodo
+                TransazioneEntity te = new TransazioneEntity(
+                        id,
+                        descrizione,
+                        categoriaStr,
+                        sottocategoriaStr,
+                        importo,
+                        data
+                );
+
+                lista.add(te);
             }
+
         } catch (SQLException e) {
             System.out.println("Errore nel recupero delle transazioni: " + e.getMessage());
         }
+
         return lista;
     }
 
+    // rimanenti metodi delete/reset come li hai già (li lascio invariati)
     public void deleteTransazioneById(int id) {
         String sql = "DELETE FROM transazioni WHERE id = ?";
         try (Connection conn = DataBaseCreator.getConnection();
@@ -97,14 +119,4 @@ public class Transazione {
             System.out.println("Errore nel reset di AUTO_INCREMENT: " + e.getMessage());
         }
     }
-
-    public void setCategoria(Categoria categoria) {
-        this.categoria = categoria;
-    }
-
-    public Categoria getCategoria() {
-        return categoria;
-    }
-
-
 }

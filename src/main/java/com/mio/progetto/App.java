@@ -1,16 +1,16 @@
 package com.mio.progetto;
 
 import com.mio.progetto.JavaFx.CreateBarChart;
-import com.mio.progetto.Model.Categoria;
-import com.mio.progetto.Model.Transazione;
-import com.mio.progetto.Model.TransazioneEntity;
+import com.mio.progetto.Model.*;
 import com.mio.progetto.database.DataBaseCreator;
 
 import java.sql.SQLException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import static javafx.application.Application.launch;
+
 
 public class App
 {
@@ -26,16 +26,15 @@ public class App
             if (input.equalsIgnoreCase("E")) {
                 System.exit(0);
             }
+
+            //DESCRIZIONE
             if (input.equalsIgnoreCase("I")) {
                 System.out.println("Inserire Descrizione");
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();
                 String descrizione = input;
-//                System.out.println("Inserire Categoria");
-//                scanner = new Scanner(System.in);
-//                input = scanner.nextLine();
-//                String categoria = input;
 
+                //CATEGORIA
                 System.out.println("Inserire Categoria tra le seguenti:");
                 for (Categoria c : Categoria.values()) {
                     System.out.println("- " + c);
@@ -51,20 +50,49 @@ public class App
                     continue;
                 }
 
+                //SOTTOCATEGORIE
+                System.out.println("Scegli una Sottocategoria per " + categoria + ":");
 
+                List<Sottocategoria> sottoCategorieDisponibili = SottoCategoriaRegistry.getSottoCategorie(categoria);
 
+                if (sottoCategorieDisponibili.isEmpty()) {
+                    System.out.println("Nessuna sottocategoria disponibile per questa categoria.");
+                    continue;
+                }
+
+                // stampa sottocategorie
+                for (Sottocategoria s : sottoCategorieDisponibili) {
+                    System.out.println("- " + s.getNome());
+                }
+
+                String sottoInput = scanner.nextLine();
+
+                // Cerca sottocategoria scelta
+                Sottocategoria sottocategoria = sottoCategorieDisponibili.stream()
+                        .filter(s -> s.getNome().equalsIgnoreCase(sottoInput))
+                        .findFirst()
+                        .orElse(null);
+
+                if (sottocategoria == null) {
+                    System.out.println("Sottocategoria non valida.");
+                    continue;
+                }
+
+                //IMPORTO
                 System.out.println("Inserire Importo");
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();
                 double importo = Double.parseDouble(input);
+
+                //DATA
                 System.out.println("Inserire Data in formato YYYY-MM-DD");
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();
                 String data = input;
-                transazione.insertTransizione(new TransazioneEntity(0, descrizione, categoria, importo, data));
+                transazione.insertTransizione(new TransazioneEntity(0, descrizione, categoria, sottocategoria ,importo, data));
             }
             if(input.equalsIgnoreCase("D")){
-                System.out.println("Che tipo di delete vuoi fare? /n Id - tramite ID /n C - tramite categoria /n Data - tramite data");
+                System.out.println("Che tipo di delete vuoi fare? /n" + "Id - tramite ID /n" + "C - tramite categoria /n" + "Data - tramite data");
                 if (input.equalsIgnoreCase("Id")) {
                     System.out.println("inserire ID");
                     scanner= new Scanner(System.in);

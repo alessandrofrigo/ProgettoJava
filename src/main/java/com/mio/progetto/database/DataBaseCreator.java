@@ -38,6 +38,7 @@ public class DataBaseCreator {
                 + "descrizione VARCHAR(255),"
                 + "importo DECIMAL(10,2),"
                 + "categoria VARCHAR(50),"
+                + "sottocategoria VARCHAR(50),"
                 + "data DATE)";
             stmt.executeUpdate(sql);
             System.out.println("Tabella creata con successo!");
