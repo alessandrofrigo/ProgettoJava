@@ -10,20 +10,29 @@ public class TransazioneEntity {
     private String data;
 
 
-    public TransazioneEntity(int Id, String descrizione, Categoria categoria, Sottocategoria sottocategoria, double importo, String data){
-        this.Id= Id;
-        this.descrizione= descrizione;
-        this.categoria= Categoria.valueOf(String.valueOf(categoria));
-        this.sottocategoria = String.valueOf(sottocategoria);
-        this.importo= importo;
-        this.data= data;
-    }
+//    public TransazioneEntity(int Id, String descrizione, Categoria categoria, Sottocategoria sottocategoria, double importo, String data){
+//        this.Id= Id;
+//        this.descrizione= descrizione;
+//        this.categoria= Categoria.valueOf(String.valueOf(categoria));
+//        this.sottocategoria = String.valueOf(sottocategoria);
+//        this.importo= importo;
+//        this.data= data;
+//    }
 
     public TransazioneEntity(int id, String descrizione, String categoriaStr, String sottocategoriaStr, double importo, String data) {
         this.Id = Id;
         this.descrizione = descrizione;
         this.categoria = Categoria.valueOf(String.valueOf(Categoria.valueOf(categoriaStr)));
         this.sottocategoria = String.valueOf(new Sottocategoria(sottocategoriaStr, this.categoria));
+        this.importo = importo;
+        this.data = data;
+    }
+
+    public TransazioneEntity(int id, String descrizione, Categoria categoria, String sottocategoriaStr, double importo, String data) {
+        this.Id = Id;
+        this.descrizione = descrizione;
+        this.categoria = Categoria.valueOf(String.valueOf(categoria));
+        this.sottocategoria = sottocategoriaStr;
         this.importo = importo;
         this.data = data;
     }

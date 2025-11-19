@@ -78,6 +78,8 @@ public class App
                     continue;
                 }
 
+
+
                 //IMPORTO
                 System.out.println("Inserire Importo");
                 scanner = new Scanner(System.in);
@@ -89,7 +91,9 @@ public class App
                 scanner = new Scanner(System.in);
                 input = scanner.nextLine();
                 String data = input;
-                transazione.insertTransizione(new TransazioneEntity(0, descrizione, categoria, sottocategoria ,importo, data));
+
+
+                transazione.insertTransizione(new TransazioneEntity(0, descrizione, categoria, sottocategoria.getNome() ,importo, data));
             }
             if(input.equalsIgnoreCase("D")){
                 System.out.println("Che tipo di delete vuoi fare? /n" + "Id - tramite ID /n" + "C - tramite categoria /n" + "Data - tramite data");

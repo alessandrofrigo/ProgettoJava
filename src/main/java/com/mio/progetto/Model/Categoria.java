@@ -1,6 +1,5 @@
 package com.mio.progetto.Model;
 
-
 public enum Categoria{
         CIBO,
         TRASPORTI,
@@ -11,4 +10,3 @@ public enum Categoria{
         SPESA,
         ALTRO
     }
-
