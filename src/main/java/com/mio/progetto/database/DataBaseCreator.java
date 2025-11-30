@@ -6,10 +6,32 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DataBaseCreator {
-    private static final String URL= "jdbc:mysql://localhost:3306/";
-    private static final String DB_NAME= "gestione_spese";
-    private static final String USER= "root";
-    private static final String PASSWORD= "test1234";
+    private static String URL;
+    private static String DB_NAME;
+    private static String USER;
+    private static String PASSWORD;
+
+    static {
+        try (java.io.InputStream input = DataBaseCreator.class.getClassLoader().getResourceAsStream("application.properties")) {
+            java.util.Properties prop = new java.util.Properties();
+            if (input == null) {
+                System.out.println("Sorry, unable to find application.properties");
+                // Set default values or handle error
+                URL = "jdbc:mysql://localhost:3306/";
+                DB_NAME = "gestione_spese";
+                USER = "root";
+                PASSWORD = "test1234";
+            } else {
+                prop.load(input);
+                URL = prop.getProperty("db.url");
+                DB_NAME = prop.getProperty("db.name");
+                USER = prop.getProperty("db.username");
+                PASSWORD = prop.getProperty("db.password");
+            }
+        } catch (java.io.IOException ex) {
+            ex.printStackTrace();
+        }
+    }
 
     public DataBaseCreator() throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
