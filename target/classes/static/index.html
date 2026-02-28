@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestione Spese</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Gestione Spese</h1>
+            <div class="total-card">
+                <h3>Totale Spese</h3>
+                <h2 id="total-amount">0.00 €</h2>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="form-section box-glass">
+                <h2>Nuova Transazione</h2>
+                <form id="transaction-form">
+                    <div class="form-group">
+                        <label for="descrizione">Descrizione</label>
+                        <input type="text" id="descrizione" required>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria" required>
+                                <option value="">Seleziona...</option>
+                            </select>
+                        </div>
+                        <div class="col">
+                            <label for="sottocategoria">Sottocategoria</label>
+                            <select id="sottocategoria" required disabled>
+                                <option value="">Seleziona prima categoria</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <div class="col">
+                            <label for="importo">Importo (€)</label>
+                            <input type="number" id="importo" step="0.01" min="0" required>
+                        </div>
+                        <div class="col">
+                            <label for="data">Data</label>
+                            <input type="date" id="data" required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn-primary">Aggiungi</button>
+                </form>
+            </div>
+
+            <div class="list-section box-glass">
+                <div class="list-header">
+                    <h2>Ultime Transazioni</h2>
+                    <div class="actions">
+                         <button id="btn-delete-options" class="btn-secondary">Opzioni Delete</button>
+                    </div>
+                </div>
+                
+                <div class="delete-opts hidden" id="delete-panel">
+                    <div class="del-row">
+                       <input type="text" id="del-cat" placeholder="Categoria (es. CIBO)">
+                       <button onclick="deleteByCategoria()">Elimina per Categoria</button>
+                    </div>
+                    <div class="del-row">
+                       <input type="date" id="del-date">
+                       <button onclick="deleteByDate()">Elimina Prima Di</button>
+                    </div>
+                </div>
+
+                <div class="transactions-list" id="transactions-container">
+                    <!-- Transactions will be injected here -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>
