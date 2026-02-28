@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.springframework.stereotype.Component;
+import jakarta.annotation.PostConstruct;
 
+@Component
 public class DataBaseCreator {
     private static String URL;
     private static String DB_NAME;
@@ -46,7 +49,7 @@ public class DataBaseCreator {
             System.out.println("Errore nella creazione del database: " + e.getMessage());
         }
     }
-
+    @PostConstruct
     public void CreateTable(){
         //URL per accedere al db specifico
         String URLDB= "jdbc:mysql://localhost:3306/gestione_spese";

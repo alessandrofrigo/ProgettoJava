@@ -2,13 +2,15 @@ package com.mio.progetto.Model;
 
 //classe per gestire una spesa o entrata
 public class TransazioneEntity {
-    private int Id;
+    private int id;
     private String descrizione;
     private Categoria categoria;
     private String sottocategoria;
     private double importo;
     private String data;
 
+    // No-args constructor for Jackson
+    public TransazioneEntity() {}
 
 //    public TransazioneEntity(int Id, String descrizione, Categoria categoria, Sottocategoria sottocategoria, double importo, String data){
 //        this.Id= Id;
@@ -20,30 +22,36 @@ public class TransazioneEntity {
 //    }
 
     public TransazioneEntity(int id, String descrizione, String categoriaStr, String sottocategoriaStr, double importo, String data) {
-        this.Id = Id;
+        this.id = id;
         this.descrizione = descrizione;
-        this.categoria = Categoria.valueOf(String.valueOf(Categoria.valueOf(categoriaStr)));
+        this.categoria = Categoria.valueOf(categoriaStr.toUpperCase());
         this.sottocategoria = String.valueOf(new Sottocategoria(sottocategoriaStr, this.categoria));
         this.importo = importo;
         this.data = data;
     }
 
     public TransazioneEntity(int id, String descrizione, Categoria categoria, String sottocategoriaStr, double importo, String data) {
-        this.Id = Id;
+        this.id = id;
         this.descrizione = descrizione;
-        this.categoria = Categoria.valueOf(String.valueOf(categoria));
+        this.categoria = categoria;
         this.sottocategoria = sottocategoriaStr;
         this.importo = importo;
         this.data = data;
     }
 
 
-    public int getId() {return Id;}
+    public int getId() {return id;}
+    public void setId(int id) { this.id = id; }
+    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public void setSottocategoria(String sottocategoria) { this.sottocategoria = sottocategoria; }
+    public void setImporto(double importo) { this.importo = importo; }
+    public void setData(String data) { this.data = data; }
 
     @Override
     public String toString() {
         return "TransazioneEntity{" +
-                "id=" + Id +
+                "id=" + id +
                 ", descrizione='" + descrizione + '\'' +
                 ", categoria='" + categoria + '\'' +
                 ", sottocategoria='" + sottocategoria + '\'' +

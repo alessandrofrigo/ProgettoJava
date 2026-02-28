@@ -2,10 +2,12 @@ package com.mio.progetto.Model;
 
 import com.mio.progetto.database.DataBaseCreator;
 
+import org.springframework.stereotype.Repository;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Repository
 public class Transazione {
 
     public void insertTransizione(TransazioneEntity t) {
