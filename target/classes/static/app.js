@@ -61,11 +61,17 @@ async function loadTransactions() {
         container.innerHTML = '';
 
         let total = 0;
+        let categoryTotals = {};
 
         data.forEach(t => {
             total += t.importo;
+            console.log("Transaction ID:", t.id, " Raw Object:", t);
             const cat = typeof t.categoria === 'string' ? t.categoria : (t.categoriaStr || JSON.stringify(t.categoria));
-            const sub = t.sottocategoria;
+            // Handle both primitive strings, and nested objects if returned by Jackson/Java
+            const sub = (t.sottocategoria && t.sottocategoria.nome) ? t.sottocategoria.nome : String(t.sottocategoria);
+
+            if (!categoryTotals[cat]) categoryTotals[cat] = 0;
+            categoryTotals[cat] += t.importo;
 
             container.innerHTML += `
                <div class="transaction-item">
@@ -86,6 +92,22 @@ async function loadTransactions() {
         });
 
         document.getElementById('total-amount').innerText = total.toFixed(2) + ' €';
+
+        const summaryContainer = document.getElementById('category-summary');
+        summaryContainer.innerHTML = '';
+        const cats = Object.keys(categoryTotals);
+        if (cats.length === 0) {
+            summaryContainer.innerHTML = '<em style="color:#94a3b8; font-size:0.9rem;">Nessuna spesa presente</em>';
+        } else {
+            cats.forEach(c => {
+                summaryContainer.innerHTML += `
+                    <div class="cat-badge">
+                        <span class="name">${c}</span>
+                        <span class="amount">${categoryTotals[c].toFixed(2)} €</span>
+                    </div>
+                `;
+            });
+        }
 
     } catch (e) {
         console.error('Err loading transactions', e);

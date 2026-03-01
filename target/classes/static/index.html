@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="it">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
+
 <body>
     <div class="container">
         <header>
@@ -53,31 +55,41 @@
                 </form>
             </div>
 
-            <div class="list-section box-glass">
-                <div class="list-header">
-                    <h2>Ultime Transazioni</h2>
-                    <div class="actions">
-                         <button id="btn-delete-options" class="btn-secondary">Opzioni Delete</button>
-                    </div>
-                </div>
-                
-                <div class="delete-opts hidden" id="delete-panel">
-                    <div class="del-row">
-                       <input type="text" id="del-cat" placeholder="Categoria (es. CIBO)">
-                       <button onclick="deleteByCategoria()">Elimina per Categoria</button>
-                    </div>
-                    <div class="del-row">
-                       <input type="date" id="del-date">
-                       <button onclick="deleteByDate()">Elimina Prima Di</button>
+            <div class="right-col">
+                <div class="summary-section box-glass" style="margin-bottom: 1.5rem;">
+                    <h2>Spese per Categoria</h2>
+                    <div id="category-summary" class="cat-summary-list">
+                        <em style="color:#94a3b8; font-size:0.9rem;">Nessuna spesa presente</em>
                     </div>
                 </div>
 
-                <div class="transactions-list" id="transactions-container">
-                    <!-- Transactions will be injected here -->
+                <div class="list-section box-glass">
+                    <div class="list-header">
+                        <h2>Ultime Transazioni</h2>
+                        <div class="actions">
+                            <button id="btn-delete-options" class="btn-secondary">Opzioni Delete</button>
+                        </div>
+                    </div>
+
+                    <div class="delete-opts hidden" id="delete-panel">
+                        <div class="del-row">
+                            <input type="text" id="del-cat" placeholder="Categoria (es. CIBO)">
+                            <button onclick="deleteByCategoria()">Elimina per Categoria</button>
+                        </div>
+                        <div class="del-row">
+                            <input type="date" id="del-date">
+                            <button onclick="deleteByDate()">Elimina Prima Di</button>
+                        </div>
+                    </div>
+
+                    <div class="transactions-list" id="transactions-container">
+                        <!-- Transactions will be injected here -->
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     <script src="app.js"></script>
 </body>
+
 </html>
