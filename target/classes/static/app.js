@@ -1,4 +1,4 @@
-const API_BASE = '/api';
+const API_BASE = 'http://localhost:8080/api';
 
 document.addEventListener('DOMContentLoaded', () => {
     loadCategories();
@@ -59,14 +59,14 @@ async function loadTransactions() {
         const data = await res.json();
         const container = document.getElementById('transactions-container');
         container.innerHTML = '';
-        
+
         let total = 0;
 
         data.forEach(t => {
             total += t.importo;
             const cat = typeof t.categoria === 'string' ? t.categoria : (t.categoriaStr || JSON.stringify(t.categoria));
             const sub = t.sottocategoria;
-            
+
             container.innerHTML += `
                <div class="transaction-item">
                     <div class="ts-info">
@@ -104,7 +104,7 @@ async function saveTransaction() {
     try {
         await fetch(`${API_BASE}/transazioni`, {
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(data)
         });
 
@@ -117,7 +117,7 @@ async function saveTransaction() {
 }
 
 async function deleteById(id) {
-    if(!confirm('Sicuro di voler eliminare questa transazione?')) return;
+    if (!confirm('Sicuro di voler eliminare questa transazione?')) return;
     try {
         await fetch(`${API_BASE}/transazioni/${id}`, { method: 'DELETE' });
         loadTransactions();
@@ -126,7 +126,7 @@ async function deleteById(id) {
 
 async function deleteByCategoria() {
     const cat = document.getElementById('del-cat').value;
-    if(!cat || !confirm(`Eliminare tutte le spese di: ${cat}?`)) return;
+    if (!cat || !confirm(`Eliminare tutte le spese di: ${cat}?`)) return;
     try {
         await fetch(`${API_BASE}/transazioni/categoria/${cat}`, { method: 'DELETE' });
         document.getElementById('del-cat').value = '';
@@ -136,7 +136,7 @@ async function deleteByCategoria() {
 
 async function deleteByDate() {
     const date = document.getElementById('del-date').value;
-    if(!date || !confirm(`Eliminare tutte le spese precedenti a: ${date}?`)) return;
+    if (!date || !confirm(`Eliminare tutte le spese precedenti a: ${date}?`)) return;
     try {
         await fetch(`${API_BASE}/transazioni/data/${date}`, { method: 'DELETE' });
         document.getElementById('del-date').value = '';
