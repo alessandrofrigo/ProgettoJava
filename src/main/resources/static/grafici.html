@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafici Spese</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar box-glass">
+            <div class="sidebar-header">
+                <h2>Finanza</h2>
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="grafici.html" class="active">Grafici</a></li>
+            </ul>
+        </nav>
+
+        <!-- Main Content Area -->
+        <div class="container main-area">
+            <header>
+                <h1>Analisi Spese</h1>
+            </header>
+
+            <div class="main-content" style="grid-template-columns: 1fr;">
+
+                <div class="box-glass" style="margin-bottom: 2rem;">
+                    <h2>Spese per Categoria (Totale)</h2>
+                    <div
+                        style="height: 400px; position: relative; width: 100%; display: flex; justify-content: center;">
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+
+                <div class="box-glass">
+                    <h2>Spese nel Tempo (Ultimi 30 giorni)</h2>
+                    <div style="height: 400px; position: relative; width: 100%;">
+                        <canvas id="timeChart"></canvas>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <script src="grafici.js"></script>
+</body>
+
+</html>
