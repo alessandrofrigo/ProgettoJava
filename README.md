@@ -12,9 +12,6 @@ L'applicativo si basa su un'architettura che prevede un backend sviluppato in Ja
 - **Linguaggio**: Java 17
 - **Framework Principale**: Spring Boot 3.1.5 (Spring Web)
 - **Gestione Dipendenze**: Maven
-- **Librerie Aggiuntive**: 
-  - JFreeChart (1.5.3)
-  - JavaFX (21)
 
 ### Database
 - **RDBMS**: MySQL

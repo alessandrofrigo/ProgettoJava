@@ -15,7 +15,8 @@ public class DataBaseCreator {
     private static String PASSWORD;
 
     static {
-        try (java.io.InputStream input = DataBaseCreator.class.getClassLoader().getResourceAsStream("application.properties")) {
+        try (java.io.InputStream input = DataBaseCreator.class.getClassLoader()
+                .getResourceAsStream("application.properties")) {
             java.util.Properties prop = new java.util.Properties();
             if (input == null) {
                 System.out.println("Sorry, unable to find application.properties");
@@ -38,38 +39,48 @@ public class DataBaseCreator {
 
     public DataBaseCreator() throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-        Statement stmt = conn.createStatement()) {
+                Statement stmt = conn.createStatement()) {
 
-        // Crea il database "gestione_spese" se non esiste
-        String sql = "CREATE DATABASE IF NOT EXISTS gestione_spese";
-        stmt.executeUpdate(sql);
-        System.out.println("Database creato con successo!");
-        }
-        catch (SQLException e) {
+            // Crea il database "gestione_spese" se non esiste
+            String sql = "CREATE DATABASE IF NOT EXISTS gestione_spese";
+            stmt.executeUpdate(sql);
+            System.out.println("Database creato con successo!");
+        } catch (SQLException e) {
             System.out.println("Errore nella creazione del database: " + e.getMessage());
         }
     }
+
     @PostConstruct
-    public void CreateTable(){
-        //URL per accedere al db specifico
-        String URLDB= "jdbc:mysql://localhost:3306/gestione_spese";
+    public void initDatabaseTables() {
+        try (Connection conn = DriverManager.getConnection(URL + DB_NAME, USER, PASSWORD);
+                Statement stmt = conn.createStatement()) {
 
-        try (Connection conn = DriverManager.getConnection(URL +DB_NAME, USER, PASSWORD);
-             Statement stmt = conn.createStatement()) {
+            // Crea la tabella "utenti" (deve essere creata PRIMA di transazioni)
+            String sqlUtenti = "CREATE TABLE IF NOT EXISTS utenti ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "username VARCHAR(100) UNIQUE,"
+                    + "email VARCHAR(150) UNIQUE,"
+                    + "password_hash VARCHAR(255),"
+                    + "ruolo VARCHAR(50),"
+                    + "data_registrazione DATETIME)";
+            stmt.executeUpdate(sqlUtenti);
+            System.out.println("Tabella utenti creata/verificata con successo!");
 
-            // Crea la tabella "transazioni"
-             String sql = "CREATE TABLE IF NOT EXISTS transazioni ("
-                + "id INT AUTO_INCREMENT PRIMARY KEY,"
-                + "descrizione VARCHAR(255),"
-                + "importo DECIMAL(10,2),"
-                + "categoria VARCHAR(50),"
-                + "sottocategoria VARCHAR(50),"
-                + "data DATE)";
-            stmt.executeUpdate(sql);
-            System.out.println("Tabella creata con successo!");
-        }
-        catch (SQLException e) {
-            System.out.println("Errore nella creazione della tabella: " + e.getMessage());
+            // Crea la tabella "transazioni" (con chiave esterna su utenti)
+            String sqlTransazioni = "CREATE TABLE IF NOT EXISTS transazioni ("
+                    + "id INT AUTO_INCREMENT PRIMARY KEY,"
+                    + "descrizione VARCHAR(255),"
+                    + "importo DECIMAL(10,2),"
+                    + "categoria VARCHAR(50),"
+                    + "sottocategoria VARCHAR(50),"
+                    + "data DATE,"
+                    + "utente_id INT,"
+                    + "FOREIGN KEY (utente_id) REFERENCES utenti(id))";
+            stmt.executeUpdate(sqlTransazioni);
+            System.out.println("Tabella transazioni creata/verificata con successo!");
+
+        } catch (SQLException e) {
+            System.out.println("Errore nella creazione delle tabelle: " + e.getMessage());
         }
     }
 
