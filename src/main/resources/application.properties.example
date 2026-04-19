@@ -1,0 +1,4 @@
+db.url=jdbc:mysql://localhost:3306/
+db.name=gestione_spese
+db.username=your_username
+db.password=your_password
