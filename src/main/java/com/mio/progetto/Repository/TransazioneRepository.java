@@ -50,8 +50,7 @@ public class TransazioneRepository {
                 t.getImporto(),
                 t.getCategoria().name(),
                 t.getSottocategoria(),
-                t.getData()
-        );
+                t.getData());
         log.info("Transazione inserita con successo: {}", t.getDescrizione());
         return rows;
     }
