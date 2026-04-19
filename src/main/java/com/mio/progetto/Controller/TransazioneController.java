@@ -2,45 +2,52 @@ package com.mio.progetto.Controller;
 
 import com.mio.progetto.Model.TransazioneEntity;
 import com.mio.progetto.Service.TransazioneService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/transazioni")
-@CrossOrigin(origins = "*") // Allow all origins for now
 public class TransazioneController {
 
     private final TransazioneService transazioneService;
 
-    @Autowired
     public TransazioneController(TransazioneService transazioneService) {
         this.transazioneService = transazioneService;
     }
 
     @GetMapping
-    public List<TransazioneEntity> getAllTransazioni() {
-        return transazioneService.getAllTransazioni();
+    public ResponseEntity<List<TransazioneEntity>> getAllTransazioni() {
+        List<TransazioneEntity> transazioni = transazioneService.getAllTransazioni();
+        return ResponseEntity.ok(transazioni);
     }
 
     @PostMapping
-    public void insertTransazione(@RequestBody TransazioneEntity transazioneEntity) {
+    public ResponseEntity<TransazioneEntity> insertTransazione(@RequestBody TransazioneEntity transazioneEntity) {
         transazioneService.insertTransazione(transazioneEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(transazioneEntity);
     }
 
     @DeleteMapping("/{id}")
-    public void deleteTransazioneById(@PathVariable int id) {
-        transazioneService.deleteTransazioneById(id);
+    public ResponseEntity<Void> deleteTransazioneById(@PathVariable int id) {
+        int rows = transazioneService.deleteTransazioneById(id);
+        if (rows > 0) {
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.notFound().build();
     }
 
     @DeleteMapping("/categoria/{categoria}")
-    public void deleteTransazioniByCategoria(@PathVariable String categoria) {
+    public ResponseEntity<Void> deleteTransazioniByCategoria(@PathVariable String categoria) {
         transazioneService.deleteTransazioniByCategoria(categoria);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/data/{data}")
-    public void deleteTransazioniBeforeDate(@PathVariable String data) {
+    public ResponseEntity<Void> deleteTransazioniBeforeDate(@PathVariable String data) {
         transazioneService.deleteTransazioniBeforeDate(data);
+        return ResponseEntity.noContent().build();
     }
 }

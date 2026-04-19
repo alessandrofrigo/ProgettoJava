@@ -1,60 +1,58 @@
 package com.mio.progetto.Model;
 
-//classe per gestire una spesa o entrata
+import java.math.BigDecimal;
+import java.time.LocalDate;
+
+/**
+ * Entity che rappresenta una transazione (spesa o entrata).
+ */
 public class TransazioneEntity {
-    private int Id;
+
+    private int id;
     private String descrizione;
     private Categoria categoria;
     private String sottocategoria;
-    private double importo;
-    private String data;
+    private BigDecimal importo;
+    private LocalDate data;
 
+    // Costruttore vuoto richiesto da Jackson per la deserializzazione JSON
+    public TransazioneEntity() {
+    }
 
-//    public TransazioneEntity(int Id, String descrizione, Categoria categoria, Sottocategoria sottocategoria, double importo, String data){
-//        this.Id= Id;
-//        this.descrizione= descrizione;
-//        this.categoria= Categoria.valueOf(String.valueOf(categoria));
-//        this.sottocategoria = String.valueOf(sottocategoria);
-//        this.importo= importo;
-//        this.data= data;
-//    }
-
-    public TransazioneEntity(int id, String descrizione, String categoriaStr, String sottocategoriaStr, double importo, String data) {
-        this.Id = Id;
+    public TransazioneEntity(int id, String descrizione, Categoria categoria, String sottocategoria, BigDecimal importo, LocalDate data) {
+        this.id = id;
         this.descrizione = descrizione;
-        this.categoria = Categoria.valueOf(String.valueOf(Categoria.valueOf(categoriaStr)));
-        this.sottocategoria = String.valueOf(new Sottocategoria(sottocategoriaStr, this.categoria));
+        this.categoria = categoria;
+        this.sottocategoria = sottocategoria;
         this.importo = importo;
         this.data = data;
     }
 
-    public TransazioneEntity(int id, String descrizione, Categoria categoria, String sottocategoriaStr, double importo, String data) {
-        this.Id = Id;
-        this.descrizione = descrizione;
-        this.categoria = Categoria.valueOf(String.valueOf(categoria));
-        this.sottocategoria = sottocategoriaStr;
-        this.importo = importo;
-        this.data = data;
-    }
+    // Getter
+    public int getId() { return id; }
+    public String getDescrizione() { return descrizione; }
+    public Categoria getCategoria() { return categoria; }
+    public String getSottocategoria() { return sottocategoria; }
+    public BigDecimal getImporto() { return importo; }
+    public LocalDate getData() { return data; }
 
-
-    public int getId() {return Id;}
+    // Setter (richiesti da Jackson)
+    public void setId(int id) { this.id = id; }
+    public void setDescrizione(String descrizione) { this.descrizione = descrizione; }
+    public void setCategoria(Categoria categoria) { this.categoria = categoria; }
+    public void setSottocategoria(String sottocategoria) { this.sottocategoria = sottocategoria; }
+    public void setImporto(BigDecimal importo) { this.importo = importo; }
+    public void setData(LocalDate data) { this.data = data; }
 
     @Override
     public String toString() {
         return "TransazioneEntity{" +
-                "id=" + Id +
+                "id=" + id +
                 ", descrizione='" + descrizione + '\'' +
-                ", categoria='" + categoria + '\'' +
+                ", categoria=" + categoria +
                 ", sottocategoria='" + sottocategoria + '\'' +
                 ", importo=" + importo +
-                ", data='" + data + '\'' +
+                ", data=" + data +
                 '}';
     }
-
-    public String getDescrizione() { return descrizione;}
-    public Categoria getCategoria(){ return categoria;}
-    public String getSottocategoria() { return sottocategoria;}
-    public Double getImporto() {return importo;}
-    public String getData() { return data;}
 }

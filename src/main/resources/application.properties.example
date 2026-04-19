@@ -1,4 +1,9 @@
-db.url=jdbc:mysql://localhost:3306/
-db.name=gestione_spese
-db.username=your_username
-db.password=your_password
+# Spring DataSource Configuration
+spring.datasource.url=jdbc:mysql://localhost:3306/gestione_spese
+spring.datasource.username=your_username
+spring.datasource.password=your_password
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+# Inizializzazione automatica del database
+spring.sql.init.mode=always
+spring.sql.init.continue-on-error=true

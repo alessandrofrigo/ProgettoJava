@@ -16,5 +16,9 @@ public class Sottocategoria {
     public Categoria getCategoriaPadre() {
         return categoriaPadre;
     }
-}
 
+    @Override
+    public String toString() {
+        return nome;
+    }
+}

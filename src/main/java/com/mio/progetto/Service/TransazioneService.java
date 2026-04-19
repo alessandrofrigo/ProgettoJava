@@ -1,7 +1,9 @@
 package com.mio.progetto.Service;
 
-import com.mio.progetto.Model.Transazione;
 import com.mio.progetto.Model.TransazioneEntity;
+import com.mio.progetto.Repository.TransazioneRepository;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -9,29 +11,31 @@ import java.util.List;
 @Service
 public class TransazioneService {
 
-    private final Transazione transazioneModel;
+    private static final Logger log = LoggerFactory.getLogger(TransazioneService.class);
 
-    public TransazioneService() {
-        this.transazioneModel = new Transazione();
+    private final TransazioneRepository transazioneRepository;
+
+    public TransazioneService(TransazioneRepository transazioneRepository) {
+        this.transazioneRepository = transazioneRepository;
     }
 
     public List<TransazioneEntity> getAllTransazioni() {
-        return transazioneModel.getAllTransazioni();
+        return transazioneRepository.findAll();
     }
 
     public void insertTransazione(TransazioneEntity transazioneEntity) {
-        transazioneModel.insertTransizione(transazioneEntity);
+        transazioneRepository.insert(transazioneEntity);
     }
 
-    public void deleteTransazioneById(int id) {
-        transazioneModel.deleteTransazioneById(id);
+    public int deleteTransazioneById(int id) {
+        return transazioneRepository.deleteById(id);
     }
 
-    public void deleteTransazioniByCategoria(String categoria) {
-        transazioneModel.deleteTransazioniByCategoria(categoria);
+    public int deleteTransazioniByCategoria(String categoria) {
+        return transazioneRepository.deleteByCategoria(categoria);
     }
 
-    public void deleteTransazioniBeforeDate(String data) {
-        transazioneModel.deleteTransazioniBeforeDate(data);
+    public int deleteTransazioniBeforeDate(String data) {
+        return transazioneRepository.deleteBeforeDate(data);
     }
 }
