@@ -1,7 +1,7 @@
-package com.mio.progetto.Controller;
+package com.mio.progetto.controller;
 
-import com.mio.progetto.Model.TransazioneEntity;
-import com.mio.progetto.Service.TransazioneService;
+import com.mio.progetto.model.TransazioneEntity;
+import com.mio.progetto.service.TransazioneService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,8 +1,8 @@
-package com.mio.progetto.Controller;
+package com.mio.progetto.controller;
 
-import com.mio.progetto.Model.Categoria;
-import com.mio.progetto.Model.SottoCategoriaRegistry;
-import com.mio.progetto.Model.Sottocategoria;
+import com.mio.progetto.model.Categoria;
+import com.mio.progetto.model.SottoCategoriaRegistry;
+import com.mio.progetto.model.Sottocategoria;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

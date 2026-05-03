@@ -1,7 +1,7 @@
-package com.mio.progetto.Service;
+package com.mio.progetto.service;
 
-import com.mio.progetto.Model.TransazioneEntity;
-import com.mio.progetto.Repository.TransazioneRepository;
+import com.mio.progetto.model.TransazioneEntity;
+import com.mio.progetto.repository.TransazioneRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;

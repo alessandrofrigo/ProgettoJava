@@ -1,7 +1,7 @@
-package com.mio.progetto.Repository;
+package com.mio.progetto.repository;
 
-import com.mio.progetto.Model.Categoria;
-import com.mio.progetto.Model.TransazioneEntity;
+import com.mio.progetto.model.Categoria;
+import com.mio.progetto.model.TransazioneEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.core.JdbcTemplate;
